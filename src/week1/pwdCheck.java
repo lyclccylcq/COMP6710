@@ -1,43 +1,82 @@
- void main(String[] args) {
-        String pwd;
-        pwd = IO.readln("Enter your password: ");
-        //check pwd
-        boolean lengthOk = lengthCheck(pwd);
-        boolean catOk= containCat(pwd);
-        boolean specialOk =noSpecialChar(pwd);
-        //boolean digitsOk=digitsCheck(pwd);
-        boolean correct = lengthOk && catOk && specialOk ;
-        if(!correct) {
-            IO.println("Invalid password!");
-        }
+public void main(String argus[]){
+    //IO.println("Please enter your pwd:");
+    //String pwd=IO.readln();
+    boolean correct=false;
+    while(!correct) {
+        IO.println("Please enter your pwd:");
+        String pwd=IO.readln();
+        boolean lengthOK = lengthCheck(pwd);
+        boolean noSpecial = charCheck(pwd);
+        boolean hasCat = catCheck(pwd);
+        boolean sum=digitSumCheck(pwd);
 
-        }
-    boolean lengthCheck(String pwd){
-        int length=pwd.length();
-        if(length>10&&length<15){
-            return true;
+        correct=(lengthOK&&noSpecial&&hasCat&&sum);
+        if(!correct){
+            IO.println("Invalid password!");
         }else {
-            return false;
+            IO.println("Pass Check");
         }
     }
-    boolean containCat(String pwd){
-        for(int i=0;i<pwd.length()-2;i++){
-            char first=pwd.charAt(i);
-            char second=pwd.charAt(i+1);
-            char third=pwd.charAt(i+2);
-            if(first=='c'&&second=='a'&&third=='t'){
-                return true;
-            }
-        }
-        return false;
-    }
-    boolean noSpecialChar(String pwd) {
-        for (int i = 0; i < pwd.length(); i++) {
-            char ch = pwd.charAt(i);
-            if (Character.isLetterOrDigit(ch) == false) {
-                return false;
-            }
-        }
+
+}
+Boolean lengthCheck(String pwd){
+    if(pwd.length()<=15&&pwd.length()>=10){
         return true;
     }
+    return false;
+}
+Boolean charCheck(String pwd){
+    for(int i=0;i<pwd.length();i++){
+        char c=pwd.charAt(i);
+        if(Character.isLetterOrDigit(c)){
+            return true;
+        }
+    }
+    return false;
+}
+Boolean catCheck(String pwd){
+    for(int i=0;i<pwd.length()-2;i++){
+        char c=pwd.charAt(i);
+        char a=pwd.charAt(i+1);
+        char t=pwd.charAt(i+2);
+        if(c=='c'&&a=='a'&&t=='t'){
+            return true;
+        }
+    }
+    return false;
+}
+Boolean digitSumCheck(String pwd){
+    int num=sumOfDigits(pwd);
+    int numV=sumOfVowel(pwd);
+    if(num!=numV){
+        return false;
+    }
+    return true;
+}
 
+int sumOfDigits(String pwd){
+    int sum=0;
+    for(int i=0;i<pwd.length();i++){
+        char ch=pwd.charAt(i);
+        if(Character.isDigit(ch)){
+            sum=sum+(ch-'0');
+        }
+    }
+    return sum;
+}
+
+Boolean isVowel(char c){
+    c=Character.toLowerCase(c);
+    return (c=='a'||c=='e'||c=='i'||c=='o'||c=='u');
+}
+
+int sumOfVowel(String pwd){
+    int sumOfVowel=0;
+    for(int i=0;i<pwd.length();i++){
+        char c=pwd.charAt(i);
+        if(isVowel(c)){
+            sumOfVowel++;
+        }
+    }
+    return sumOfVowel;
+}
