@@ -1,4 +1,5 @@
 package week6;
 
-public class ErasableChatHistory {
+interface ErasableChatHistory extends ChatHistory {
+    void erase();
 }
