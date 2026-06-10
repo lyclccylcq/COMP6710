@@ -1,7 +1,7 @@
 package week2;
 
 public class binSearch {
-    boolean binSearch(int[] array,int guess){
+    static boolean binSearch(int[] array,int guess){
         int left = 0;
         int right = array.length-1;
         while(left<=right){
